@@ -1,3 +1,4 @@
+
 # Image Classification CLI Tool
 
 A Rust-based command-line utility and web server for image classification using machine learning. This project provides both a web API and CLI interface for predicting image classes using a simple Convolutional Neural Network (CNN).
@@ -7,6 +8,9 @@ A Rust-based command-line utility and web server for image classification using 
 - **CLI Interface**: Predict image classes directly from the command line
 - **Web Server**: REST API for image classification
 - **Model Training**: Train your own classification models
+- **OS Error Detection**: Analyze screenshots to identify operating system errors
+- **Multi-OS Support**: Detect errors from Windows, Linux, and macOS
+- **Error Classification**: Identify specific error types (BSOD, kernel panic, crashes, etc.)
 - **Multiple Formats**: Support for various image formats
 - **Rust Performance**: Built with Rust for high performance and safety
 
@@ -62,6 +66,24 @@ or using the convenience script:
 ./predict_image.sh path/to/your/image.jpg
 ```
 
+#### 4. Train OS Error Model
+```bash
+cargo run train-os-error
+```
+or using the convenience script:
+```bash
+./train_os_error_model.sh
+```
+
+#### 5. Predict OS Error from Screenshot
+```bash
+cargo run predict-os-error --screenshot path/to/error_screenshot.png
+```
+or using the convenience script:
+```bash
+./predict_os_error.sh path/to/error_screenshot.png
+```
+
 ### Web API
 
 Once the server is running, you can make predictions via HTTP POST requests:
@@ -80,6 +102,25 @@ Once the server is running, you can make predictions via HTTP POST requests:
 {
   "class": 5,
   "confidence": 0.87
+}
+```
+
+**OS Error Analysis Endpoint**: `POST /predict-os-error`
+
+**Request Body**:
+```json
+{
+  "image": [/* flattened 128x128 screenshot array as f32 values */]
+}
+```
+
+**Response**:
+```json
+{
+  "error_type": "blue_screen_of_death",
+  "os_type": "windows",
+  "confidence": 0.92,
+  "description": "Критическая системная ошибка Windows (BSOD)"
 }
 ```
 
