@@ -84,6 +84,20 @@ or using the convenience script:
 ./predict_os_error.sh path/to/error_screenshot.png
 ```
 
+#### 6. Chat with AI Assistant
+Open the interactive chat interface in your browser:
+```bash
+./chat_with_ai.sh
+```
+Then visit: `http://localhost:5000/chat`
+
+The chat interface provides:
+- **Real-time conversation** with AI about OS errors
+- **Screenshot upload** for automatic error analysis
+- **Detailed diagnostics** with causes and solutions
+- **Multi-language support** (Russian/English)
+- **WebSocket-based** real-time communication
+
 ### Web API
 
 Once the server is running, you can make predictions via HTTP POST requests:
@@ -121,6 +135,38 @@ Once the server is running, you can make predictions via HTTP POST requests:
   "os_type": "windows",
   "confidence": 0.92,
   "description": "Критическая системная ошибка Windows (BSOD)"
+}
+```
+
+**Chat Interface**: `GET /chat`
+
+Opens an interactive web interface for chatting with the AI assistant.
+
+**WebSocket Chat**: `WS /ws/`
+
+Real-time WebSocket connection for chat functionality.
+
+**Message Format**:
+```json
+{
+  "message": "What is a BSOD?",
+  "image_data": "base64_encoded_screenshot_optional"
+}
+```
+
+**Chat Response**:
+```json
+{
+  "response": "BSOD is a critical Windows error...",
+  "analysis": {
+    "error_type": "blue_screen_of_death",
+    "os_type": "windows",
+    "confidence": 0.92,
+    "detailed_description": "...",
+    "possible_causes": ["..."],
+    "solutions": ["..."]
+  },
+  "suggestions": ["Save the error code...", "..."]
 }
 ```
 
